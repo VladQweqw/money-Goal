@@ -1,0 +1,27 @@
+$background: #060606;
+$primary: #FF9C27;
+$accent: #E8BE17;
+$text: #FFFFFF;
+$secondary-text: #FFFFFF80;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+$font: 'Poppins', sans-serif;
+
+h1 {
+    font-size: calc(1.5rem + 2vw);
+}
+
+.m2 {
+    font-size: calc(1rem + 2vw)
+}
+
+.m3 {
+    font-size: 1rem;
+}
+
+
+.absolute-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

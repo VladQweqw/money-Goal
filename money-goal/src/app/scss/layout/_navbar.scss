@@ -1,0 +1,14 @@
+.navbar {
+    background-color: $primary;
+    text-align: center;
+    height: 60px;
+
+    .navbar-day {
+        font-weight: 700;
+    }
+
+    .navbar-time {
+        color: black;
+    }
+
+}

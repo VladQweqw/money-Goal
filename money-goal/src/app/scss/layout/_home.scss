@@ -1,0 +1,170 @@
+* {
+    margin: 0;
+    padding: 0;
+    top: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: $background;
+    color: $text;
+    font-family: $font;
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid;
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: 80px calc(100dvh - 180px) 100px;
+
+}
+
+
+#main {
+    height: 100%;
+    display: grid;
+    place-items: center;
+}
+
+.content-wrapper {
+    
+    .content-slideshow::-webkit-scrollbar {
+        display: none;
+    }
+
+    .content-slideshow {
+        margin-bottom: 2rem;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+        padding: 2rem;
+        overflow-x: auto;
+        width: 100vw;
+        scroll-snap-type: x mandatory;
+        
+        .content {
+            text-align: center;
+            scroll-snap-align: start;
+            flex: none;
+            width: 100vw;
+
+            .content-title {
+                margin-bottom: 1rem;
+            }
+
+            .money-wrapper {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .background-radial {
+                    @extend .absolute-center;
+                    position: absolute;
+                    width: 100vw;
+                    height: 100vw;
+                    height: 350px;
+                    background: radial-gradient(50.00% 50.00% at 50.00% 50.00%, $primary 2.90%, $primary 2.50%, rgba(248, 167, 34, 0.00) 100%);
+                }  
+
+                .money-circle {
+                    position: absolute;
+                    @extend .absolute-center;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 200px;
+                    height: 200px;
+                    border-radius: 100px;
+                    padding: 1.5rem;
+
+                    .money-current {
+                        font-size: 3rem;
+                        line-height: 35px;
+                    }
+
+                    .money-procent, .money-goal {
+                        font-size: 1.25rem;
+                        font-weight: bold;
+                    }
+
+                    .label {
+                        color: $secondary-text;
+                    }
+
+                   
+                }
+
+                .svg-gradient {
+                    width: 75vw;
+                    height: 75vw;
+                    border-radius: 500px;
+                    background: linear-gradient(135deg, $primary 50%, $accent);
+                    background-size: 400% 400%;
+                    animation: test 7s ease-in-out forwards infinite;
+                }
+
+                @keyframes test {
+                    0% {
+                        border-radius: 110px 140px 110px 150px;
+                        background-position: 0% 50%;
+
+                    }
+
+                    50% {
+                        border-radius: 125px 111px 173px 130px;
+                        background-position: 100% 50%;
+                    }
+                    
+                    100% {
+                        border-radius: 110px 140px 110px 150px;
+                        background-position: 0% 50%;
+
+                    }
+                }
+            }
+
+            .progress {
+
+                div {
+                    width: 200px;
+                    height: 200px;
+                    position: absolute;
+                    @extend .absolute-center;
+                    border-radius: 100px;
+                }
+
+                .progress-bar {
+                    border: 4px solid white;                    
+                }
+
+                // .progress-value {
+                //     border: 4px solid $accent;
+
+                // }
+
+            }
+        }
+
+    }
+
+    .tabs {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+        
+        .tab {
+            width: 7px;
+            height: 7px;
+            border-radius: 10px;
+            background-color: gray;
+            transition: 200ms ease;
+        }
+
+        .active-tab {
+            background-color: $accent;
+        }
+    }
+}
