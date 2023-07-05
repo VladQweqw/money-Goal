@@ -1,18 +1,32 @@
 "use client"
+
 import { Metadata } from 'next'
 import { useState, useEffect } from 'react'
 
-export const metadata: Metadata = {
-  title: 'MoneyGoal',
-  description: 'An app used to save you progress',
-  
-}
+// export const metadata: Metadata = {
+//   title: 'MoneyGoal',
+//   description: 'An app used to save you progress',
+// }
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  
+  
+  return (
+    <html lang="en">
+      <body>
+          <Navbar />
+
+          {children}
+        </body>
+    </html>
+  )
+}
+
+function Navbar() {
   const [day, setDay] = useState<string>('Monday')
   const [time, setTime] = useState<string>("00:00")
 
@@ -33,19 +47,11 @@ export default function RootLayout({
   useEffect(() => {
     updateTime()
   }, [])
-  
-  
-  return (
-    <html lang="en">
-      <body>
 
-          <header className="navbar">
+  return(
+    <header className="navbar">
               <h2 className="m2 navbar-day">{day}</h2>
               <p className="m3 navbar-time">{time}</p>
           </header>
-
-          {children}
-        </body>
-    </html>
   )
 }

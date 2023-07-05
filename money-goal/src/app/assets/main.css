@@ -36,6 +36,105 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
+.modal-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  z-index: 99;
+  opacity: 0.8;
+  display: flex;
+  padding: 1rem;
+}
+
+.modal {
+  margin: auto;
+  max-width: 350px;
+  height: auto;
+  border-radius: 8px;
+  background-color: #3E3E3E;
+  display: grid;
+  grid-template-rows: 60px auto 65px;
+  gap: 1rem;
+}
+.modal .modal-header {
+  width: 100%;
+  height: 100%;
+  background-color: #FF9C27;
+  border-radius: 8px 8px 0 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.modal .modal-header .modal-title {
+  background: transparent;
+  outline: none;
+  color: white;
+  text-align: center;
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+.modal .modal-header .modal-title ::-moz-placeholder {
+  color: white !important;
+}
+.modal .modal-header .modal-title ::placeholder {
+  color: white !important;
+}
+.modal .modal-form {
+  padding: 1rem;
+  display: grid;
+  gap: 3rem;
+}
+.modal .modal-form .input {
+  position: relative;
+  height: 100%;
+}
+.modal .modal-form .input .label {
+  position: absolute;
+  top: 50%;
+  font-size: 1rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 200ms ease;
+}
+.modal .modal-form .input .active-label {
+  top: -5%;
+  font-size: 0.9rem;
+}
+.modal .modal-form .input .input-field {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #FF9C27;
+  font-size: 1.25rem;
+  text-align: center;
+  color: white;
+  padding: 0.5rem;
+}
+.modal .button-wrapper {
+  padding: 10px;
+}
+.modal .button-wrapper .create-modal {
+  width: 100%;
+  background: linear-gradient(35deg, #FF9C27, #E8BE17);
+  padding: 0.75rem;
+  color: white;
+  font-size: 1.25rem;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  transition: 200ms ease;
+}
+.modal .button-wrapper .create-modal:active {
+  scale: 0.9;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -49,7 +148,6 @@ body {
   font-family: "Poppins", sans-serif;
   max-width: 800px;
   margin: 0 auto;
-  border: 1px solid;
   display: grid;
   min-height: 100dvh;
   grid-template-rows: 80px calc(100dvh - 180px) 100px;
@@ -89,11 +187,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 350px;
 }
 .content-wrapper .content-slideshow .content .money-wrapper .background-radial {
   position: absolute;
-  width: 100vw;
-  height: 100vw;
+  width: 350px;
   height: 350px;
   background: radial-gradient(50% 50% at 50% 50%, #FF9C27 2.9%, #FF9C27 2.5%, rgba(248, 167, 34, 0) 100%);
 }
@@ -118,6 +216,21 @@ body {
 }
 .content-wrapper .content-slideshow .content .money-wrapper .money-circle .label {
   color: rgba(255, 255, 255, 0.5019607843);
+}
+.content-wrapper .content-slideshow .content .money-wrapper .money-circle-add {
+  background-color: #3E3E3E;
+  justify-content: center;
+  box-shadow: 0px 0px 10px 0px #060606;
+  cursor: pointer;
+}
+.content-wrapper .content-slideshow .content .money-wrapper .money-circle-add .money-add {
+  font-size: 3rem;
+  color: #FF9C27;
+}
+.content-wrapper .content-slideshow .content .money-wrapper .background-radial-add {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(20% 24% at 50% 50%, #FF9C27 0%, #FF9C27 0%, rgba(248, 167, 34, 0) 190%);
 }
 .content-wrapper .content-slideshow .content .money-wrapper .svg-gradient {
   width: 75vw;

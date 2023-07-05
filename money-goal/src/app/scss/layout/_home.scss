@@ -11,13 +11,12 @@ body {
     font-family: $font;
     max-width: 800px;
     margin: 0 auto;
-    border: 1px solid;
     display: grid;
     min-height: 100dvh;
     grid-template-rows: 80px calc(100dvh - 180px) 100px;
 
 }
-
+ 
 
 #main {
     height: 100%;
@@ -57,12 +56,12 @@ body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                height: 350px;
 
                 .background-radial {
                     @extend .absolute-center;
                     position: absolute;
-                    width: 100vw;
-                    height: 100vw;
+                    width: 350px;
                     height: 350px;
                     background: radial-gradient(50.00% 50.00% at 50.00% 50.00%, $primary 2.90%, $primary 2.50%, rgba(248, 167, 34, 0.00) 100%);
                 }  
@@ -94,6 +93,26 @@ body {
                     }
 
                    
+                }
+
+                .money-circle-add {
+                    background-color: $gray;
+                    justify-content: center;
+                    box-shadow: 0px 0px 10px 0px $background;
+                    cursor: pointer;
+
+                    .money-add  {
+                        font-size: 3rem;
+                        color: $primary;
+                    }
+
+                    
+                }
+
+                .background-radial-add {
+                    width: 200px;
+                    height: 200px;
+                    background: radial-gradient(20% 24% at 50% 50%, #FF9C27 0%, #FF9C27 0%, rgba(248, 167, 34, 0) 190%)
                 }
 
                 .svg-gradient {
