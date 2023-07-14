@@ -36,7 +36,7 @@ body {
         display: flex;
         flex-direction: row;
         gap: 2rem;
-        padding: 2rem;
+        padding: 32px;
         overflow-x: auto;
         width: 100vw;
         scroll-snap-type: x mandatory;
@@ -164,6 +164,19 @@ body {
                 // }
 
             }
+        }
+        
+        .complete {
+           .money-wrapper {
+                .svg-gradient {
+                    background: linear-gradient(180deg, #D9D9D9 0%, #65dd1b 0.01%, #77BA09 100%);
+
+                }
+
+                .background-radial {
+                    display: none;
+                }
+           }
         }
 
     }

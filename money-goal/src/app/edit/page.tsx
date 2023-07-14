@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import ModalBg from '../components/modelBg'
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { saveToLocal, retrieveFromLocal } from '../assets/functions'
 import { useRouter } from 'next/navigation'
 
@@ -12,12 +12,33 @@ export type dataType = {
 }
 
 
-export default function NewGoal() {
+export default function EditGoal() {
   const goal = useRef<HTMLInputElement | null>(null)
   const amount = useRef<HTMLInputElement | null>(null)
   const title = useRef<HTMLInputElement | null>(null)
   const router = useRouter()
   
+  useEffect(() => {
+      setTimeout(() => {
+        const queryParameters = new URLSearchParams(window.location.search)
+
+        let goalParam = queryParameters.get('goal') || '',
+            amountParam = queryParameters.get('amount') || '',
+            titleParam = queryParameters.get('title') || '';
+
+        goal.current!.value = goalParam;
+        amount.current!.value = amountParam;
+        title.current!.value = titleParam;
+        
+        (document.getElementById('goal-label')   as HTMLLabelElement).classList.add("active-label");
+        (document.getElementById('amount-label') as HTMLLabelElement).classList.add("active-label")
+
+      }, 1);
+      () => {return}
+  }, [])
+  
+  
+
   function submitForm() {
     const goalVal = goal.current!.value;
     const amountVal = amount.current!.value;
@@ -28,29 +49,14 @@ export default function NewGoal() {
       return alert("fill gaps")
     }
 
-    
-
     const dataObj: dataType = {
       title: titleVal,
       goal: parseInt(goalVal),
       amount: parseInt(amountVal),
     }
 
-    if(isEdit) {
 
-      
 
-    }else {
-      if(retrieveFromLocal("data")) {
-        const data: dataType[] = retrieveFromLocal('data');
-        data.push(dataObj);
-  
-        saveToLocal('data', data);  
-      }else {
-        saveToLocal('data', [dataObj]);
-      }
-    }
-    
     router.push("/")
   }
 
@@ -64,7 +70,7 @@ export default function NewGoal() {
           <form className="modal-form">
               <div className="input">
                 <label className='label' id='goal-label' htmlFor={'goal'}>Set goal</label>
-                <input  ref={goal} onFocus={() => {          
+                <input ref={goal} onFocus={() => {          
                   (document.getElementById('goal-label') as HTMLLabelElement).classList.add("active-label");
                 }} 
                 onBlur={(e) => {
@@ -98,7 +104,7 @@ export default function NewGoal() {
           <div className="button-wrapper">
             <button
             onClick={() => submitForm()}
-            className="create-modal">Create</button>
+            className="create-modal">Save</button>
           </div>
         </div>
     </ModalBg>

@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation'
 import { retrieveFromLocal } from './assets/functions'
 import { dataType } from './new/page'
 
+import { motion } from 'framer-motion'
+
 export default function Home() {
   const [data, setData] = useState<dataType[]>([])
 
@@ -15,30 +17,44 @@ export default function Home() {
       )
   }, [])
   
-
+  let ok = false;
+  let initial = 0;
   return (
     <main id="main">
       
       <div className="content-wrapper">
-            <div className="content-slideshow">
-              
-              {data.map((item: dataType, index: number) => {
-                if(index === data.length - 1) {
-                  return <>
-                    <ContentItem {...item}  key={index}/>
-                    <AddContent />
-                  </>
-                }
+            <div className="content-slideshow" onScroll={(e) => {
+              let addElement = document.getElementById('add-content');
 
-                return <ContentItem {...item}  key={index}/>
-              })}
+              if(!ok) {
+                initial = addElement?.getBoundingClientRect().x || 0;
+                ok = true;
+              }
+
+              let CONTENT_WIDTH = addElement?.getBoundingClientRect().width || 0;
+              let currentX = addElement?.getBoundingClientRect().x || 0;              
+              let currentIndex = Math.floor(initial / ( 32 + currentX + CONTENT_WIDTH))
               
+              console.log(currentIndex);
+
+              document.querySelectorAll(".tab")?.[currentIndex + 1]?.classList.remove("active-tab")
+              document.querySelectorAll(".tab")?.[currentIndex - 1]?.classList.remove("active-tab")
+
+              document.querySelectorAll(".tab")[currentIndex].classList.add("active-tab")
+            }}>
+              
+              {data.length && <>
+                {data.map((item: dataType, index: number) => {
+                  return <ContentItem {...item}  key={index}/>
+                })}
+
+                  <AddContent />      
+              </>}
             </div>
 
             <div className="tabs">              
-              {new Array(data.length + 1).fill(0).map((a, index:number) => {
-                if(index === 0) return <span className="tab active-tab" key={index}></span>
-
+            <span className="tab active-tab"></span>
+              {new Array(data.length).fill(0).map((item: number, index:number) => {
                 return <span className="tab" key={index}></span>
               })}
             </div>
@@ -53,9 +69,13 @@ function AddContent() {
 
   
   return(
-    <div onClick={() => {
+    <motion.div
+      initial={{scale: 0}}
+      animate={{scale: 1}}
+
+    onClick={() => {
         router.push('/new')
-    }} className="content">
+    }} className="content" id='add-content'>
     <h1 className="content-title m1">Add goal</h1>
 
     <div className="money-wrapper">
@@ -66,7 +86,7 @@ function AddContent() {
         </div>
     </div>
 
-  </div>
+  </motion.div>
   )
 
 
@@ -75,17 +95,30 @@ function AddContent() {
 function ContentItem(data: dataType) {
   const router = useRouter()
   const procent = (100 * data.amount) / data.goal;;
+  let isComplete = false;
+
+  if(data.amount >= data.goal) isComplete = true;
 
   return(
-    <div className="content" onClick={() => {
-      router.push(`/new?edit=true?goal=${data.goal}?amount=${data.amount}?title=${data.title}`)
+    <div 
+    
+    className={`content-goal content ${isComplete && 'complete'}`} onClick={() => {
+      router.push(`/edit?edit=true&goal=${data.goal}&amount=${data.amount}&title=${data.title}`)
     }}>
     <h1 className="content-title m1">{data.title}</h1>
 
     <div className="money-wrapper">
-        <div className="svg-gradient">
-        </div>
-        <div className="background-radial"></div>
+        <motion.div
+          initial={{scale: 0}}
+          animate={{scale: 1}}
+        className="svg-gradient">
+        </motion.div>
+        <motion.div
+        initial={{opacity: 0}}
+        animate={{opacity: 1, transition: {
+          delay: 1.25
+        }}}
+        className="background-radial"></motion.div>
         
         <div className="progress">
           <div className="progress-bar"></div>
@@ -93,18 +126,31 @@ function ContentItem(data: dataType) {
         </div>
         
         <div className="money-circle">
-          <p className="money-goal m3">/{data.goal}</p>
+          <motion.p
+          initial={{scale: 0}}
+          animate={{scale: 1, transition: {
+            delay: .25,
+          }}}            className="money-goal m3">/{data.goal}</motion.p>
 
-          <div className='money-container'>
+          <motion.div
+            initial={{scale: 0}}
+            animate={{scale: 1, transition: {
+              delay: .5,
+            }}}          className='money-container'>
             <h1 className="m1 money-current">{data.amount}</h1>
             <p className="label m3">left</p>
-          </div>
+          </motion.div>
 
-          <p className="money-procent m3">{procent}%</p>
+          <motion.p 
+          initial={{scale: 0}}
+          animate={{scale: 1, transition: {
+            delay: .75,
+          }}}
+          className="money-procent m3">{procent.toFixed(0)}%</motion.p>
         </div>
     </div>
 
-  </div>
+    </div>
   )
 
 }
