@@ -56,7 +56,7 @@ body {
   border-radius: 8px;
   background-color: #3E3E3E;
   display: grid;
-  grid-template-rows: 60px auto 65px;
+  grid-template-rows: 60px auto auto;
   gap: 1rem;
 }
 .modal .modal-header {
@@ -118,18 +118,26 @@ body {
 }
 .modal .button-wrapper {
   padding: 10px;
+  display: flex;
+  gap: 1rem;
 }
-.modal .button-wrapper .create-modal {
+.modal .button-wrapper .btn {
   width: 100%;
-  background: linear-gradient(35deg, #FF9C27, #E8BE17);
   padding: 0.75rem;
-  color: white;
   font-size: 1.25rem;
   cursor: pointer;
   outline: none;
   border: none;
   border-radius: 8px;
   transition: 200ms ease;
+}
+.modal .button-wrapper .create-modal {
+  background: linear-gradient(35deg, #FF9C27, #E8BE17);
+  color: white;
+}
+.modal .button-wrapper .remove-modal {
+  background: linear-gradient(35deg, red, #d82c2c);
+  color: white;
 }
 .modal .button-wrapper .create-modal:active {
   scale: 0.9;
@@ -235,10 +243,10 @@ body {
 .content-wrapper .content-slideshow .content .money-wrapper .svg-gradient {
   width: 75vw;
   height: 75vw;
-  border-radius: 500px;
   background: linear-gradient(135deg, #FF9C27 50%, #E8BE17);
   background-size: 400% 400%;
-  animation: test 7s ease-in-out forwards infinite;
+  border-radius: 100%;
+  animation: test 10s ease infinite forwards;
 }
 @keyframes test {
   0% {

@@ -9,6 +9,7 @@ export type dataType = {
   title: string,
   goal: number,
   amount: number,
+  id: number,
 }
 
 
@@ -28,29 +29,25 @@ export default function NewGoal() {
       return alert("fill gaps")
     }
 
-    
-
     const dataObj: dataType = {
       title: titleVal,
       goal: parseInt(goalVal),
       amount: parseInt(amountVal),
+      id: new Date().getTime()
     }
 
-    if(isEdit) {
-
-      
-
-    }else {
-      if(retrieveFromLocal("data")) {
-        const data: dataType[] = retrieveFromLocal('data');
-        data.push(dataObj);
   
-        saveToLocal('data', data);  
-      }else {
-        saveToLocal('data', [dataObj]);
-      }
+    if(retrieveFromLocal("data")) {
+      const data: dataType[] = retrieveFromLocal('data');
+      data.push(dataObj);
+
+      saveToLocal('data', data);  
+    }else {
+      saveToLocal('data', [dataObj]);
     }
+  
     
+  
     router.push("/")
   }
 
@@ -98,7 +95,7 @@ export default function NewGoal() {
           <div className="button-wrapper">
             <button
             onClick={() => submitForm()}
-            className="create-modal">Create</button>
+            className="create-modal btn">Create</button>
           </div>
         </div>
     </ModalBg>

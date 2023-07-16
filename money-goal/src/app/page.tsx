@@ -1,6 +1,6 @@
 "use client"
 import './assets/main.css' // css main file
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { retrieveFromLocal } from './assets/functions'
@@ -35,21 +35,18 @@ export default function Home() {
               let currentX = addElement?.getBoundingClientRect().x || 0;              
               let currentIndex = Math.floor(initial / ( 32 + currentX + CONTENT_WIDTH))
               
-              console.log(currentIndex);
-
               document.querySelectorAll(".tab")?.[currentIndex + 1]?.classList.remove("active-tab")
               document.querySelectorAll(".tab")?.[currentIndex - 1]?.classList.remove("active-tab")
 
               document.querySelectorAll(".tab")[currentIndex].classList.add("active-tab")
             }}>
               
-              {data.length && <>
+              {data.length ? <>
                 {data.map((item: dataType, index: number) => {
                   return <ContentItem {...item}  key={index}/>
                 })}
-
-                  <AddContent />      
-              </>}
+                    <AddContent />
+              </>: <AddContent />}
             </div>
 
             <div className="tabs">              
@@ -97,6 +94,8 @@ function ContentItem(data: dataType) {
   const procent = (100 * data.amount) / data.goal;;
   let isComplete = false;
 
+  const gradient = useRef<HTMLDivElement | null>(null)
+
   if(data.amount >= data.goal) isComplete = true;
 
   return(
@@ -109,9 +108,11 @@ function ContentItem(data: dataType) {
 
     <div className="money-wrapper">
         <motion.div
+          ref={gradient}
           initial={{scale: 0}}
           animate={{scale: 1}}
-        className="svg-gradient">
+          className="svg-gradient">
+          
         </motion.div>
         <motion.div
         initial={{opacity: 0}}

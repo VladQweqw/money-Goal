@@ -4,13 +4,7 @@ import ModalBg from '../components/modelBg'
 import { useRef, useEffect, useState } from 'react'
 import { saveToLocal, retrieveFromLocal } from '../assets/functions'
 import { useRouter } from 'next/navigation'
-
-export type dataType = {
-  title: string,
-  goal: number,
-  amount: number,
-}
-
+import { dataType } from '../new/page'
 
 export default function EditGoal() {
   const goal = useRef<HTMLInputElement | null>(null)
@@ -19,7 +13,7 @@ export default function EditGoal() {
   const router = useRouter()
   
   useEffect(() => {
-      setTimeout(() => {
+    setTimeout(() => {
         const queryParameters = new URLSearchParams(window.location.search)
 
         let goalParam = queryParameters.get('goal') || '',
@@ -32,7 +26,7 @@ export default function EditGoal() {
         
         (document.getElementById('goal-label')   as HTMLLabelElement).classList.add("active-label");
         (document.getElementById('amount-label') as HTMLLabelElement).classList.add("active-label")
-
+        
       }, 1);
       () => {return}
   }, [])
@@ -40,6 +34,7 @@ export default function EditGoal() {
   
 
   function submitForm() {
+    const queryParameters = new URLSearchParams(window.location.search)
     const goalVal = goal.current!.value;
     const amountVal = amount.current!.value;
     const titleVal = title.current!.value;
@@ -53,12 +48,34 @@ export default function EditGoal() {
       title: titleVal,
       goal: parseInt(goalVal),
       amount: parseInt(amountVal),
+      id: new Date().getTime()
     }
 
+    const arr = retrieveFromLocal('data') || [] as dataType[] | [];
 
+    let idx = 0;
+    for(let i = 0; i < arr.length; i++) {
+      if(arr[i].title === queryParameters.get('title')) {
+        idx = i;
+        break;
+      }
+    }
+
+    arr[idx] = dataObj;    
+    saveToLocal('data', arr);
 
     router.push("/")
   }
+
+  function remove() {
+    const queryParameters = new URLSearchParams(window.location.search)
+    const arr = retrieveFromLocal('data') || [] as dataType[] | [];
+    let newArr = arr.filter((item: dataType) => item.title !== queryParameters.get('title'));
+        
+    saveToLocal('data', newArr)  
+    router.push("/")
+  }    
+
 
   return (
     <ModalBg>
@@ -103,8 +120,16 @@ export default function EditGoal() {
 
           <div className="button-wrapper">
             <button
-            onClick={() => submitForm()}
-            className="create-modal">Save</button>
+            onClick={(e) => {
+              submitForm()
+            }}
+            className="create-modal btn">Save</button>
+
+            <button
+            onClick={(e) => {
+              remove()
+            }}
+            className="remove-modal btn">Delete</button>
           </div>
         </div>
     </ModalBg>

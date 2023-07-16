@@ -118,24 +118,23 @@ body {
                 .svg-gradient {
                     width: 75vw;
                     height: 75vw;
-                    border-radius: 500px;
                     background: linear-gradient(135deg, $primary 50%, $accent);
                     background-size: 400% 400%;
-                    animation: test 7s ease-in-out forwards infinite;
+                    border-radius: 100%;
+                    animation: test 10s ease infinite forwards;
                 }
 
                 @keyframes test {
                     0% {
                         border-radius: 110px 140px 110px 150px;
                         background-position: 0% 50%;
-
                     }
-
+                  
                     50% {
                         border-radius: 125px 111px 173px 130px;
                         background-position: 100% 50%;
                     }
-                    
+                   
                     100% {
                         border-radius: 110px 140px 110px 150px;
                         background-position: 0% 50%;
